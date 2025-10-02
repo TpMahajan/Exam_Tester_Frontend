@@ -8,7 +8,13 @@ import StudentDashboard from './pages/StudentDashboard';
 import SubmissionPage from './pages/SubmissionPage';
 import ViewSubmissions from './pages/ViewSubmissions';
 import AdminDashboard from './pages/AdminDashboard';
+import { testAPIConfiguration } from './utils/apiTest';
 import './App.css';
+
+// Test API configuration in development
+if (process.env.NODE_ENV === 'development') {
+  testAPIConfiguration();
+}
 
 // Protected Route component
 const ProtectedRoute = ({ children, requiredRole }) => {

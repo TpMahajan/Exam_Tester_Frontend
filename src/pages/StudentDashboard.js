@@ -19,7 +19,7 @@ const StudentDashboard = () => {
 
   // Helper function to get PDF URL from GridFS
   const getPdfUrl = (examFileId) => {
-    const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const baseUrl = process.env.REACT_APP_API_URL?.replace('/api', '') || 'https://exam-tester-backend.onrender.com';
     return `${baseUrl}/api/exams/file/${examFileId}`;
   };
 
@@ -136,7 +136,7 @@ const StudentDashboard = () => {
   return (
     <div>
       <h1>Student Dashboard</h1>
-
+      
       {/* Active Exams List Section - Always Show */}
       <div className="card">
         <h2>📚 Available Active Exams</h2>
@@ -195,8 +195,8 @@ const StudentDashboard = () => {
                     <p style={{ margin: '0', fontSize: '14px', color: '#666' }}>
                       <strong>Created:</strong> {new Date(examItem.createdAt).toLocaleDateString()}
                     </p>
-                  </div>
-                  
+        </div>
+
                   <div style={{ textAlign: 'center' }}>
                     {hasSubmitted ? (
                       <div>
@@ -208,9 +208,9 @@ const StudentDashboard = () => {
                         }}>
                           ❌ You have attempted this exam before
                         </p>
-                        <button
+          <button
                           disabled
-                          className="btn"
+            className="btn"
                           style={{ 
                             width: '100%', 
                             fontSize: '14px',
@@ -219,17 +219,17 @@ const StudentDashboard = () => {
                           }}
                         >
                           Already Attempted This Exam
-                        </button>
+          </button>
                       </div>
                     ) : (
-                      <button
+          <button
                         onClick={() => attemptExam(examItem.id, examItem.title)}
                         className="btn"
                         style={{ width: '100%', fontSize: '14px' }}
                         disabled={loading}
                       >
                         {loading ? 'Starting...' : '🎯 Attempt This Exam'}
-                      </button>
+          </button>
                     )}
                   </div>
                 </div>
@@ -240,7 +240,7 @@ const StudentDashboard = () => {
         ) : (
           <div style={{ textAlign: 'center', padding: '20px' }}>
             <p>No exams are currently available. Please check back later.</p>
-          </div>
+        </div>
         )}
       </div>
 
@@ -284,7 +284,7 @@ const StudentDashboard = () => {
               backgroundColor: '#f8d7da', 
               color: '#721c24', 
               padding: '20px', 
-              borderRadius: '8px', 
+              borderRadius: '8px',
               textAlign: 'center',
               border: '1px solid #f5c6cb'
             }}>
@@ -447,8 +447,8 @@ const StudentDashboard = () => {
                 >
                   Submit Answers
                 </button>
-              </div>
             </div>
+          </div>
           )}
         </div>
       )}
