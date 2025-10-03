@@ -79,11 +79,10 @@ const FileUploader = ({ onFilesSelected, accept = ".pdf,.jpg,.jpeg,.png", multip
         />
         <label htmlFor="file-upload" style={{ 
           cursor: 'pointer', 
-          display: 'block', 
+          display: 'flex',
           width: '100%',
           height: '100%',
           minHeight: '80px',
-          display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center'

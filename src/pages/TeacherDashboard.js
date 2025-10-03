@@ -14,7 +14,6 @@ const TeacherDashboard = () => {
   const [submissionsLoading, setSubmissionsLoading] = useState(true);
   const [examsLoading, setExamsLoading] = useState(true);
   const [message, setMessage] = useState('');
-  const [showSubmissions, setShowSubmissions] = useState(false);
   const [submissionsCleared, setSubmissionsCleared] = useState(false);
   const navigate = useNavigate();
 
@@ -154,30 +153,6 @@ const TeacherDashboard = () => {
     }
   };
 
-  const activateExam = async (examId, examTitle) => {
-    const confirmMessage = `Are you sure you want to reactivate the exam "${examTitle}"?\n\nThis action will:\n- Make the exam visible to students again\n- Students will be able to attempt it\n- Previous submissions will remain`;
-    
-    if (window.confirm(confirmMessage)) {
-      try {
-        setLoading(true);
-        const response = await examAPI.activateExam(examId);
-        
-        if (response.data.success) {
-          setMessage(`Exam "${examTitle}" has been reactivated successfully! Students can now see it again.`);
-          // Refresh exams list
-          loadExams();
-          // Refresh submissions list
-          loadSubmissions();
-        } else {
-          setMessage('Failed to activate exam: ' + response.data.message);
-        }
-      } catch (error) {
-        setMessage('Failed to activate exam: ' + (error.response?.data?.message || error.message));
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 
   return (
     <div>

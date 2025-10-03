@@ -1,9 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { examAttemptAPI } from '../services/api';
 
 const Timer = ({ duration, onTimeUp, examId, attemptId, initialTime }) => {
   const [timeLeft, setTimeLeft] = useState(initialTime || duration * 60); // Convert minutes to seconds
   const [isActive, setIsActive] = useState(true);
+
+  const updateServerTime = useCallback(async (remainingTime) => {
+    try {
+      if (attemptId) {
+        await examAttemptAPI.updateTime(attemptId, remainingTime);
+      }
+    } catch (error) {
+      console.error('Failed to update server time:', error);
+    }
+  }, [attemptId]);
 
   useEffect(() => {
     let interval = null;
@@ -29,17 +39,7 @@ const Timer = ({ duration, onTimeUp, examId, attemptId, initialTime }) => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, timeLeft, onTimeUp, attemptId]);
-
-  const updateServerTime = async (remainingTime) => {
-    try {
-      if (attemptId) {
-        await examAttemptAPI.updateTime(attemptId, remainingTime);
-      }
-    } catch (error) {
-      console.error('Failed to update server time:', error);
-    }
-  };
+  }, [isActive, timeLeft, onTimeUp, updateServerTime, attemptId]);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);

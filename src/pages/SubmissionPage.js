@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import FileUploader from '../components/FileUploader';
 import { submitAnswers, getCurrentExam } from '../api/examApi';
@@ -13,11 +13,7 @@ const SubmissionPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    loadExam();
-  }, []);
-
-  const loadExam = async () => {
+  const loadExam = useCallback(async () => {
     try {
       const examId = searchParams.get('examId');
       
@@ -45,7 +41,11 @@ const SubmissionPage = () => {
     } catch (error) {
       console.error('Error loading exam:', error);
     }
-  };
+  }, [searchParams]);
+
+  useEffect(() => {
+    loadExam();
+  }, [loadExam]);
 
   const handleFileSelect = (files) => {
     setAnswerFiles(files);

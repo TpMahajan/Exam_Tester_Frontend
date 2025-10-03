@@ -22,6 +22,7 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://exam-tester-backend.onrender.com/api"
+    "REACT_APP_API_URL": "https://exam-tester-backend.onrender.com/api",
+    "CI": "false"
   }
 }
